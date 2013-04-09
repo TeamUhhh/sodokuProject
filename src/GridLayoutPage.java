@@ -158,12 +158,19 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 					{
 						try{
 							int number = Integer.parseInt(inputCheck);
+							if(number>9||number<0)
+							{
+								input[i].setText("");
+								ErrorNumberWindow ew = new ErrorNumberWindow();
+								ew.setVisible(true);
+								
+							}
 						}
 						catch(NumberFormatException nfe)
 						{
 							ErrorWindow ew = new ErrorWindow();
 							ew.setVisible(true);
-							System.out.println("Error");
+							
 							input[i].setText("");
 						}
 					}
