@@ -8,6 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Arrays;
+import java.util.Scanner;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -30,8 +34,12 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	private JLabel moveCounter = null;
 	private JLabel levelView = null;
 	private JTextField[] input = new JTextField[81];
+	private String constantArray[] = new String[81];
+	private String answerArray[] = new String[81];
+	private int indexArray[] = new int[50];
+	private int indexCounter = 0;
+	private Boolean[] checkIfAnswered = new Boolean[81];
 	Font inputFont = new Font("Arial", Font.BOLD, 30);
-	//private JComponent textArray[] = new JComponent[81];
 	Timer time = new Timer(delay, new ActionListener() {   // added javax.swing.Timer to count by time delays(1000 milliseconds or 1 second)
         public void actionPerformed(ActionEvent e) {
             timeUpdate();
@@ -42,6 +50,9 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	public GridLayoutPage(int x, int y, String level) {
 		super();
 		
+		Arrays.fill(checkIfAnswered, false);
+		getNumbers();
+		getAnswers();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHGRID/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - HEIGHTGRID/2);
@@ -84,6 +95,17 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			input[i] = new JTextField(1);
 			input[i].setFont(inputFont);
 			input[i].setHorizontalAlignment(JTextField.CENTER);
+			int moveConstant = 0;
+			for (int j = 0; j < indexCounter; j++){
+				if(i == indexArray[j]){
+					input[i].setText(constantArray[indexArray[j]]);
+					input[i].setEditable(false);
+					moveConstant++;
+				}
+				else
+					input[i].addActionListener(this);
+				
+			}
 			
 			if (i == 2 || i == 11 || i == 29 || i == 38 || i == 56 || i == 65 || i == 74)
 			{                                                     //top left bottom right color
@@ -105,7 +127,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			{
 				input[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			}
-			input[i].addActionListener(this);
+			
 			gridPanel.add(input[i]);
 		}
 		
@@ -121,6 +143,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		JButton exitButton = new JButton("Quit to Home");
 		exitButton.addActionListener(this);
 		bottomPanel.add(exitButton);
+		
+		JButton guessButton = new JButton("Guess");
+		guessButton.addActionListener(this);
+		bottomPanel.add(guessButton);
 		
 		add(bottomPanel, BorderLayout.SOUTH);
 		
@@ -140,8 +166,13 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			StartMenu newStart = new StartMenu();
 			newStart.setVisible(true);
 		}
-		moveCounter.setText("Total Moves: " + ++counterPress); 
-		checkCorrectFormat(e);
+		else if (buttonCheck.equals("Guess")){
+			checkCorrectNumbers();
+		}
+		else{
+			moveCounter.setText("Total Moves: " + (++counterPress - 35)); 
+			checkCorrectFormat(e);
+		}
 	//	gridPanel.add(input);
 		//gridPanel.setVisible(true);
 		
@@ -163,14 +194,15 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 								input[i].setText("");
 								ErrorNumberWindow ew = new ErrorNumberWindow();
 								ew.setVisible(true);
-								
+								break;
 							}
+							else if(!checkIfAnswered[i])
+								input[i].setForeground(Color.BLACK);
 						}
 						catch(NumberFormatException nfe)
 						{
 							ErrorWindow ew = new ErrorWindow();
 							ew.setVisible(true);
-							
 							input[i].setText("");
 						}
 					}
@@ -182,6 +214,92 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	{
 		timeClock.setText("Time: " + ++timeCount);
 	}
+	public void getNumbers(){
+		
+		Scanner inputNumbers = null;
+		int constantCounter = 0;
+		String readInNumbers = "";
+		
+		try{
+			inputNumbers = new Scanner(new FileInputStream("samplesudoku1.txt"));
+			
+		}
+		catch (Exception e){
+			System.out.println("File Error");
+			System.exit(0);
+		}
+		while(inputNumbers.hasNextLine() || constantCounter < 81){
+			if (constantCounter == 81)
+				break;
+			
+			readInNumbers = inputNumbers.next();
+			if(readInNumbers.equals("0")){
+				constantArray[constantCounter] = "0";
+				constantCounter++;
+			}
+			else{
+				constantArray[constantCounter] = readInNumbers;
+				indexArray[indexCounter] = constantCounter;
+				indexCounter++;
+				constantCounter++;
+			}
+		}
+		inputNumbers.close();
+			
+	}
+	public void getAnswers(){
+		
+		Scanner inputNumbers = null;
+		int constantCounter = 0;
+		String readInNumbers = "";
+		
+		try{
+			inputNumbers = new Scanner(new FileInputStream("samplesudoku1ans.txt"));
+			
+		}
+		catch (Exception e){
+			System.out.println("File Error");
+			System.exit(0);
+		}
+		while(inputNumbers.hasNextLine() || constantCounter < 81){
+			if (constantCounter == 81)
+				break;
+			
+			readInNumbers = inputNumbers.next();
+			answerArray[constantCounter] = readInNumbers;
+			constantCounter++;
+		}
+
+		inputNumbers.close();
+	}
+	public void checkCorrectNumbers(){
+		String getInput = "";
+		int indexCounter = 0;
+		
+		for(int i = 0; i< 81; i++){
+			getInput = input[i].getText();
+			
+			if(getInput.equals(answerArray[i])){
+				input[i].setText(answerArray[i]);
+				
+				if(i == indexArray[indexCounter]){
+					input[i].setForeground(Color.BLACK);
+					indexCounter++;
+				}
+				else{
+					checkIfAnswered[i] = true;
+					input[i].setForeground(Color.BLUE);
+					input[i].setEditable(false);
+					
+				}
+
+			}
+			else if(!getInput.equals(""))
+				input[i].setForeground(Color.RED);
+
+		}
+	}
+
 }
 
 
