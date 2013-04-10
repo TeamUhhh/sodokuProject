@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -194,24 +193,15 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 								input[i].setText("");
 								ErrorNumberWindow ew = new ErrorNumberWindow();
 								ew.setVisible(true);
-<<<<<<< HEAD
-								
-							}
-=======
 								break;
 							}
 							else if(!checkIfAnswered[i])
 								input[i].setForeground(Color.BLACK);
->>>>>>> 8e0f15b566d858b8790f699c2362c4453dc5fed8
 						}
 						catch(NumberFormatException nfe)
 						{
 							ErrorWindow ew = new ErrorWindow();
 							ew.setVisible(true);
-<<<<<<< HEAD
-							
-=======
->>>>>>> 8e0f15b566d858b8790f699c2362c4453dc5fed8
 							input[i].setText("");
 						}
 					}
