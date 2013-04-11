@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 
 
 public class ErrorWindow extends JFrame implements ActionListener{
-	ErrorWindow(){
-		//test
+	
+	ErrorWindow(String y){
 		super();
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -27,9 +27,21 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		// creates a new Border Layout 
-		setLayout(new BorderLayout());
-		JLabel errorStatement = new JLabel("Enter Numbers Only!", JLabel.CENTER);
-		add(errorStatement, BorderLayout.CENTER);
+		if(y.equals("Not Number")){
+				setLayout(new BorderLayout());
+				JLabel errorStatement = new JLabel("Enter Numbers Only!", JLabel.CENTER);
+				add(errorStatement, BorderLayout.CENTER);
+		}
+		else if(y.equals("Not Win")){
+			setLayout(new BorderLayout());
+			JLabel errorStatement = new JLabel("Sorry, not a Winning Combination", JLabel.CENTER);
+			add(errorStatement, BorderLayout.CENTER);
+		}
+		else if(y.equals("Bad Number")){
+			setLayout(new BorderLayout());
+			JLabel errorStatement = new JLabel("Enter numbers less than 9 and greater than 0 only!", JLabel.CENTER);
+			add(errorStatement, BorderLayout.CENTER);
+		}
 		
 		// creates a button to be pressed to dismiss window
 		JPanel submitButton = new JPanel(new FlowLayout());

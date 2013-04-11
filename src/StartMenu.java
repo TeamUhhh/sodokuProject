@@ -21,11 +21,13 @@ public class StartMenu extends JFrame implements ActionListener{
 	public static final int HEIGHTSTART = 500;
 	Font buttonFont = new Font("Arial", Font.BOLD, 20);
 	Font headerFont = new Font("Arial", Font.BOLD, 60);
+	Boolean checkDemovar = false;
 	
-	public StartMenu(){
+	public StartMenu(Boolean demoCheck){
 		
 		super();
 		
+		checkDemovar = demoCheck;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHSTART/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - HEIGHTSTART/2);
@@ -93,17 +95,17 @@ public class StartMenu extends JFrame implements ActionListener{
 		if(getAction.equals("Easy")){
 			
 			// creates a new "Easy" GridLayout
-			GridLayoutPage nineGrid = new GridLayoutPage(9, 9, "Easy");
+			GridLayoutPage nineGrid = new GridLayoutPage(9, 9, "Easy", checkDemovar);
 			nineGrid.setVisible(true);
 		}
 		else if(getAction.equals("Hard")){
 			// creates a new "Hard" GridLayout
-			GridLayoutPage settings = new GridLayoutPage(9, 9, "Hard");
+			GridLayoutPage settings = new GridLayoutPage(9, 9, "Hard", checkDemovar);
 			settings.setVisible(true);
 		}
 		else if(getAction.equals("Settings")){
 			// creates a new Settings Page
-			SettingsLayoutPage settings = new SettingsLayoutPage();
+			SettingsLayoutPage settings = new SettingsLayoutPage(false);
 			settings.setVisible(true);
 			
 		}

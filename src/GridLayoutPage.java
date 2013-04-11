@@ -28,6 +28,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	
 	public static final int WIDTHGRID = 500;
 	public static final int HEIGHTGRID = 500;
+	private String getLevel = null;
 	private int counterPress = 0, timeCount = 0, delay = 1000;
 	private JPanel topPanel = null, gridPanel = null;
 	private JLabel timeClock = null;
@@ -36,9 +37,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	private JTextField[] input = new JTextField[81];
 	private String constantArray[] = new String[81];
 	private String answerArray[] = new String[81];
-	private int indexArray[] = new int[50];
+	private int indexArray[] = new int[81];
 	private int indexCounter = 0;
 	private Boolean[] checkIfAnswered = new Boolean[81];
+	Boolean checkDemovar;
 	Font inputFont = new Font("Arial", Font.BOLD, 30);
 	Timer time = new Timer(delay, new ActionListener() {   // added javax.swing.Timer to count by time delays(1000 milliseconds or 1 second)
         public void actionPerformed(ActionEvent e) {
@@ -47,12 +49,32 @@ public class GridLayoutPage extends JFrame implements ActionListener{
      });
 	
 
-	public GridLayoutPage(int x, int y, String level) {
+	public GridLayoutPage(int x, int y, String level, Boolean checkDemo) {
 		super();
 		
+		getLevel = level;
+		checkDemovar = checkDemo;
 		Arrays.fill(checkIfAnswered, false);
+		Arrays.fill(indexArray, 0);
 		getNumbers();
 		getAnswers();
+		if(checkDemovar){
+			indexCounter = 81;
+			int i = 0, lastIndex = 0;
+			while(indexArray[i] > 0){
+				lastIndex = indexArray[i];
+				i++;
+			}
+			for (i = 0; i < 81; i++){
+				if(i == lastIndex){
+					continue;
+				}
+				else{
+					constantArray[i] = answerArray[i];
+					indexArray[i] = i;
+				}
+			}
+		}
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHGRID/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - HEIGHTGRID/2);
@@ -156,14 +178,18 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		String buttonCheck = e.getActionCommand();
+		Boolean checkWin;
+		
 		if (buttonCheck.equals("Submit")){
-			dispose();
-			StartMenu newStart = new StartMenu();
-			newStart.setVisible(true);
+			checkWin = checkIfWin();
+			checkWinWindow(checkWin);
+			//dispose();
+			//StartMenu newStart = new StartMenu(false);
+			//newStart.setVisible(true);
 		}
 		else if (buttonCheck.equals("Quit to Home")){
 			dispose();
-			StartMenu newStart = new StartMenu();
+			StartMenu newStart = new StartMenu(false);
 			newStart.setVisible(true);
 		}
 		else if (buttonCheck.equals("Guess")){
@@ -192,7 +218,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 							if(number>9||number<0)
 							{
 								input[i].setText("");
-								ErrorNumberWindow ew = new ErrorNumberWindow();
+								ErrorWindow ew = new ErrorWindow("Bad Number");
 								ew.setVisible(true);
 								break;
 							}
@@ -201,7 +227,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 						}
 						catch(NumberFormatException nfe)
 						{
-							ErrorWindow ew = new ErrorWindow();
+							ErrorWindow ew = new ErrorWindow("Not Number");
 							ew.setVisible(true);
 							input[i].setText("");
 						}
@@ -297,6 +323,28 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			else if(!getInput.equals(""))
 				input[i].setForeground(Color.RED);
 
+		}
+	}
+	public boolean checkIfWin(){
+		String inputCheck = null;
+		
+		for(int i = 0; i < 81; i++){
+			inputCheck = input[i].getText();
+			if(!inputCheck.equals(answerArray[i])){
+				return false;
+			}
+		}
+		return true;
+
+	}
+	public void checkWinWindow(Boolean win){
+		if(!win){
+			ErrorWindow ew = new ErrorWindow("Not Win");
+			ew.setVisible(true);
+		}
+		else{
+			WinWindow ww = new WinWindow(timeCount, counterPress, getLevel);
+			ww.setVisible(true);
 		}
 	}
 
