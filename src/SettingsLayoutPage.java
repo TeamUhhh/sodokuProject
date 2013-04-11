@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -104,8 +107,17 @@ public class SettingsLayoutPage extends JFrame implements ActionListener{
 			newStart.setVisible(true);
 		}
 		else if(getAction.equals("HighScores")){
-			AdvancedWindow aw = new AdvancedWindow();
-			aw.setVisible(true);
+			Scanner checkSettingsExist = null;
+			try{
+				checkSettingsExist = new Scanner(new FileInputStream("highscores.txt"));
+				checkSettingsExist.close();
+				HighScores highScorePage = new HighScores();
+				highScorePage.setVisible(true);
+			}
+			catch(FileNotFoundException ex){
+				ErrorWindow noScores = new ErrorWindow("No Scores");
+				noScores.setVisible(true);
+			}
 		}
 		else if(getAction.equals("Advanced")){
 			AdvancedWindow aw = new AdvancedWindow();
