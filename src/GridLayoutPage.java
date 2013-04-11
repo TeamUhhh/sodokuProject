@@ -220,7 +220,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			StartMenu newStart = new StartMenu(false);
 			newStart.setVisible(true);
 		}
-<<<<<<< HEAD
+
 		// check the current numbers for correct/incorrect values
 		else if (buttonCheck.equals("Guess")){
 			checkGuessNumbers();
@@ -229,7 +229,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			moveCounter.setText("Total Moves: " + (++counterPress - 35)); 
 			checkCorrectFormat(e);
 		}	
-=======
+		
 		moveCounter.setText("Total Moves: " + ++counterPress); 
 		Boolean check = checkCorrectFormat(e);
 		
@@ -238,13 +238,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	//	gridPanel.add(input);
 		//gridPanel.setVisible(true);
 		
-		
->>>>>>> Megre master
 	}
 
 	public Boolean checkCorrectFormat(ActionEvent e) {
 		
-<<<<<<< HEAD
 		for (int i = 0; i<(9*9); i++){
 			String inputCheck = input[i].getText(); // reads in the input from the grid
 
@@ -260,7 +257,6 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 						ErrorWindow ew = new ErrorWindow("Bad Number");
 						ew.setVisible(true);
 						break;
-=======
 		for (int i = 0; i<(9*9); i++)
 		{
 				String inputCheck = input[i].getText();
@@ -278,7 +274,6 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 							input[i].setText("");
 							return false;
 						}
->>>>>>> Megre master
 					}
 					// if all conditions hold true and the number has been "answered" before through guess then it will be set back to black (if red)
 					else if(!checkIfAnswered[i])
@@ -299,7 +294,6 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		// starts the clock
 		timeClock.setText("Time: " + ++timeCount);
 	}
-<<<<<<< HEAD
 	public void getConstantNumbers(){
 		
 		Scanner inputNumbers = null;
@@ -422,7 +416,6 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		else{
 			WinWindow ww = new WinWindow(timeCount, counterPress, getLevel);
 			ww.setVisible(true);
-=======
 	public void checkSameNumber(ActionEvent e){
 		
 		for (int i = 0; i<(9*9); i++)
@@ -437,7 +430,6 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 						input[i].setText("");
 					}
 				}
->>>>>>> Megre master
 		}
 	}
 }
