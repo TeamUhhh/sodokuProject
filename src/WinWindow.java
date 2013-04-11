@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,9 +20,16 @@ public class WinWindow extends JFrame implements ActionListener{
 	public static final int WIDTHWIN = 400;
 	public static final int HEIGHTWIN = 400;
 	Font headerFont = new Font("Arial", Font.BOLD, 50);
+	JTextField inputName;
+	int timeVar = 0, movesVar = 0;
+	String levelVar = null;
 	
 	WinWindow(int time, int moves, String level){
 		super();
+		
+		timeVar = time;
+		movesVar = moves;
+		levelVar = level;
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHWIN/2);
@@ -48,7 +56,7 @@ public class WinWindow extends JFrame implements ActionListener{
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		
-		JTextField inputName = new JTextField("Please enter in your name...");
+		inputName = new JTextField("Please enter in your name...");
 		namePanel.add(inputName);
 		
 		JButton okayName = new JButton("OK");
@@ -56,6 +64,16 @@ public class WinWindow extends JFrame implements ActionListener{
 		namePanel.add(okayName);
 		
 		infoPanel.add(namePanel, BorderLayout.CENTER);
+		
+		JPanel exitButtonPanel = new JPanel();
+		exitButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JButton exitStart = new JButton("Exit to Home");
+		exitStart.addActionListener(this);
+		exitButtonPanel.add(exitStart);
+		
+		
+		add(infoPanel, BorderLayout.CENTER);
+		add(exitButtonPanel, BorderLayout.SOUTH);
 		
 		
 		
@@ -65,9 +83,32 @@ public class WinWindow extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
 		String getInput = e.getActionCommand();
+		String getName = null;
 		if(getInput.equals("OK")){
-			//
+			getName = inputName.getText();
+			HighScoreFile(getName, timeVar, movesVar, levelVar);
+			ErrorWindow ew = new ErrorWindow("Win Screen");
+			ew.setVisible(true);
+			
 		}
+		else if(getInput.equals("Exit to Home")){
+			StartMenu newStart = new StartMenu(false);
+			newStart.setVisible(true);
+			dispose();
+		}
+	}
+	public void HighScoreFile(String name, int time, int moves, String level){
+		PrintWriter highScoreFile = null;
+		
+		try{
+			highScoreFile = new PrintWriter("highscores.txt");
+			highScoreFile.print(name + " " + time + " " + moves + " " + level);
+		}
+		catch (Exception e){
+			System.out.println("Error making file");
+		}
+		highScoreFile.flush();
+		highScoreFile.close();
 	}
 
 }

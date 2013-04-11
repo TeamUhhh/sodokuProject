@@ -103,6 +103,10 @@ public class SettingsLayoutPage extends JFrame implements ActionListener{
 			StartMenu newStart = new StartMenu(demoCheckvar);
 			newStart.setVisible(true);
 		}
+		else if(getAction.equals("HighScores")){
+			AdvancedWindow aw = new AdvancedWindow();
+			aw.setVisible(true);
+		}
 		else if(getAction.equals("Advanced")){
 			AdvancedWindow aw = new AdvancedWindow();
 			aw.setVisible(true);

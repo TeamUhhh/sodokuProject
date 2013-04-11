@@ -18,10 +18,10 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		super();
 		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		int sWidth = (((int)screenSize.getWidth()/2) - 300/2);
+		int sWidth = (((int)screenSize.getWidth()/2) - 450/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - 150/2);
 		
-		setSize(300, 150);
+		setSize(400, 150);
 		setTitle("Team Uhhhh");
 		setLocation(sWidth, sHeight);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,6 +40,11 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		else if(y.equals("Bad Number")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("Enter numbers less than 9 and greater than 0 only!", JLabel.CENTER);
+			add(errorStatement, BorderLayout.CENTER);
+		}
+		else if(y.equals("Win Screen")){
+			setLayout(new BorderLayout());
+			JLabel errorStatement = new JLabel("Please Check 'Settings -> HighScrore' To Check Your Scores!", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
 		
