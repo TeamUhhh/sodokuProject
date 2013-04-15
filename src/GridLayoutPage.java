@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 import javax.swing.BorderFactory;
@@ -35,7 +36,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	private String constantArray[] = new String[81];
 	private String answerArray[] = new String[81];
 	
-	private int counterPress = 0, timeCount = 0, delay = 1000, indexCounter = 0;
+	private int counterPress = 0, timeCount = 0, delay = 1000, indexCounter = 0, randomFile = 0;
 	private int indexArray[] = new int[81];
 	
 	private JPanel topPanel = null, gridPanel = null;
@@ -77,8 +78,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		checkNumColor = checkNumberColor;
 		Arrays.fill(checkIfAnswered, false); // fills the "check if answered" to all false
 		Arrays.fill(indexArray, 0); // fills the index array to all 0
+		getRandom();
 		getConstantNumbers(); // opens an input .txt file to input "constant" numbers
 		getAnswers(); // opens the corresponding answers .txt file to get "answers"
+
 		
 		
 		// check if "Demo" is ON, if 'ON' then will fill every array position but 1 to the answer
@@ -113,13 +116,11 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		setLocation(sWidth, sHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout()); // sets the base layout to Border Layout to add multiple frames
-		
-		
-		
-		
-		
+
 		
 		menuBar = new JMenuBar();
+		
+		
 		menu = new JMenu("File");
 		menu.add(makeMenuItem("Open"));
 		menu.add(makeMenuItem("Close"));
@@ -611,7 +612,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		String readInNumbers = "";
 		
 		try{
-			inputNumbers = new Scanner(new FileInputStream("samplesudoku1.txt")); // trys to open the "constant" number file
+			inputNumbers = new Scanner(new FileInputStream("samplesudoku" + randomFile + ".txt")); // trys to open the "constant" number file
 		}
 		catch (Exception e){
 			System.out.println("File Error");
@@ -647,7 +648,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		String readInNumbers = "";
 		
 		try{
-			inputNumbers = new Scanner(new FileInputStream("samplesudoku1ans.txt")); // trys to open the answers file
+			inputNumbers = new Scanner(new FileInputStream("samplesudoku"  + randomFile + "ans.txt")); // trys to open the answers file
 			
 		}
 		catch (Exception e){
@@ -727,6 +728,11 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			WinWindow ww = new WinWindow(timeCount, counterPress, getLevel);
 			ww.setVisible(true);
 		}
+	}
+	public void getRandom(){
+		Random random = new Random();
+		randomFile = random.nextInt(2) + 1;
+		System.out.println(randomFile);
 	}
 }
 
