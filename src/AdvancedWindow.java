@@ -65,7 +65,10 @@ public class AdvancedWindow extends JFrame implements ActionListener{
 		String getAction = e.getActionCommand();
 		
 		if(getAction.equals("Demo")){
+			dispose();
 			demoOn = true; // if demo is pressed then the value true is carried through the program to the grid page
+			GridLayoutPage nineGrid = new GridLayoutPage(9, 9, "easy", demoOn, false, null, false, null);
+			nineGrid.setVisible(true);
 		}
 		// if "Back" button pressed the the current window will be disposed and a new Settings Frame will be created with the value of demoOn passed through
 		else if(getAction.equals("Back")){

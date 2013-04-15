@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -16,8 +17,12 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 
 
@@ -38,6 +43,13 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 	private JLabel moveCounter = null;
 	private JLabel levelView = null;
 	private JTextField[] input = new JTextField[81];
+	private JMenuBar menuBar = null;
+	private JMenu menu = null, color = null, colorNumber = null;
+	//private JMenuItem menuItem = null;
+	
+	private Color getColor = null, getNumColor = null;
+	private Boolean checkBackColor = false, checkNumColor = false;
+	
 
 
 	private Boolean[] checkIfAnswered = new Boolean[81];
@@ -51,7 +63,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
         }
      });
 	
-	public GridLayoutPage(int x, int y, String level, Boolean checkDemo) {
+	public GridLayoutPage(int x, int y, String level, Boolean checkDemo, Boolean checkColor, Color setColor, Boolean checkNumberColor, Color numberColor) {
 		
 		super();
 		
@@ -59,6 +71,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		// gets info need to make certain "check"s 
 		getLevel = level; // gets level
 		checkDemovar = checkDemo; // checks if "Demo" has been pressed
+		checkBackColor = checkColor;
+		getColor = setColor;
+		getNumColor = numberColor;
+		checkNumColor = checkNumberColor;
 		Arrays.fill(checkIfAnswered, false); // fills the "check if answered" to all false
 		Arrays.fill(indexArray, 0); // fills the index array to all 0
 		getConstantNumbers(); // opens an input .txt file to input "constant" numbers
@@ -99,6 +115,201 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		setLayout(new BorderLayout()); // sets the base layout to Border Layout to add multiple frames
 		
 		
+		
+		
+		
+		
+		menuBar = new JMenuBar();
+		menu = new JMenu("File");
+		menu.add(makeMenuItem("Open"));
+		menu.add(makeMenuItem("Close"));
+		menu.add(makeMenuItem("Save"));
+		
+		menuBar.add(menu);
+		
+		JPanel changeBackGrid = new JPanel();
+		changeBackGrid.setLayout(new BorderLayout());
+		
+		JPanel colorGrid = new JPanel();
+		colorGrid.setLayout(new GridLayout(3,3));
+		
+		JButton test = new JButton(" RED ");
+		test.addActionListener(this);
+		test.setBackground(Color.RED);
+		test.setForeground(Color.RED);
+		test.setOpaque(true);
+		colorGrid.add(test);
+		
+		JButton test1 = new JButton(" BLUE ");
+		test1.addActionListener(this);
+		test1.setBackground(Color.BLUE);
+		test1.setForeground(Color.BLUE);
+		test1.setOpaque(true);
+		colorGrid.add(test1);
+		
+		JButton test2 = new JButton(" GREEN ");
+		test2.addActionListener(this);
+		test2.setBackground(Color.GREEN);
+		test2.setForeground(Color.GREEN);
+		test2.setOpaque(true);
+		colorGrid.add(test2);
+		
+		JButton test3 = new JButton(" BLACK ");
+		test3.addActionListener(this);
+		test3.setBackground(Color.BLACK);
+		test3.setForeground(Color.BLACK);
+		test3.setOpaque(true);
+		colorGrid.add(test3);
+		
+		JButton test4 = new JButton(" GRAY ");
+		test4.addActionListener(this);
+		test4.setBackground(Color.GRAY);
+		test4.setForeground(Color.GRAY);
+		test4.setOpaque(true);
+		colorGrid.add(test4);
+		
+		JButton test5 = new JButton(" ORANGE ");
+		test5.addActionListener(this);
+		test5.setBackground(Color.ORANGE);
+		test5.setForeground(Color.ORANGE);
+		test5.setOpaque(true);
+		colorGrid.add(test5);
+		
+		JButton test6 = new JButton(" CYAN ");
+		test6.addActionListener(this);
+		test6.setBackground(Color.CYAN);
+		test6.setForeground(Color.CYAN);
+		test6.setOpaque(true);
+		colorGrid.add(test6);
+		
+		JButton test7 = new JButton(" PINK ");
+		test7.addActionListener(this);
+		test7.setBackground(Color.pink);
+		test7.setForeground(Color.pink);
+		test7.setOpaque(true);
+		colorGrid.add(test7);
+		
+		JButton test8 = new JButton(" YELLOW ");
+		test8.addActionListener(this);
+		test8.setBackground(Color.YELLOW);
+		test8.setForeground(Color.YELLOW);
+		test8.setOpaque(true);
+		colorGrid.add(test8);
+		
+		
+		changeBackGrid.add(colorGrid, BorderLayout.CENTER);
+		
+		JPanel defaultButtonPanel1 = new JPanel();
+		defaultButtonPanel1.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JButton defaultButton1 = new JButton("Set Background Color Back to Default");
+		defaultButton1.addActionListener(this);
+		defaultButtonPanel1.add(defaultButton1);
+		colorGrid.add(defaultButtonPanel1);
+		
+		changeBackGrid.add(defaultButtonPanel1, BorderLayout.SOUTH);
+		
+
+		
+		color = new JMenu("Background Color");
+		color.add(changeBackGrid);
+		menuBar.add(color);
+		
+		JPanel changeNumberGrid = new JPanel();
+		changeNumberGrid.setLayout(new BorderLayout());
+		
+		JPanel colorGridNumbers = new JPanel();
+		colorGridNumbers.setLayout(new GridLayout(3,3));
+		
+		JButton numberRed = new JButton(" red ");
+		numberRed.addActionListener(this);
+		numberRed.setBackground(Color.RED);
+		numberRed.setForeground(Color.RED);
+		numberRed.setOpaque(true);
+		colorGridNumbers.add(numberRed);
+		
+		JButton numberBlue = new JButton(" blue ");
+		numberBlue.addActionListener(this);
+		numberBlue.setBackground(Color.BLUE);
+		numberBlue.setForeground(Color.BLUE);
+		numberBlue.setOpaque(true);
+		colorGridNumbers.add(numberBlue);
+		
+		JButton numberGreen = new JButton(" green ");
+		numberGreen.addActionListener(this);
+		numberGreen.setBackground(Color.GREEN);
+		numberGreen.setForeground(Color.GREEN);
+		numberGreen.setOpaque(true);
+		colorGridNumbers.add(numberGreen);
+		
+		JButton numberBlack = new JButton(" black ");
+		numberBlack.addActionListener(this);
+		numberBlack.setBackground(Color.BLACK);
+		numberBlack.setForeground(Color.BLACK);
+		numberBlack.setOpaque(true);
+		colorGridNumbers.add(numberBlack);
+		
+		JButton numberGray = new JButton(" gray ");
+		numberGray.addActionListener(this);
+		numberGray.setBackground(Color.GRAY);
+		numberGray.setForeground(Color.GRAY);
+		numberGray.setOpaque(true);
+		colorGridNumbers.add(numberGray);
+		
+		JButton numberOrange = new JButton(" orange ");
+		numberOrange.addActionListener(this);
+		numberOrange.setBackground(Color.ORANGE);
+		numberOrange.setForeground(Color.ORANGE);
+		numberOrange.setOpaque(true);
+		colorGridNumbers.add(numberOrange);
+		
+		JButton numberCyan = new JButton(" cyan ");
+		numberCyan.addActionListener(this);
+		numberCyan.setBackground(Color.CYAN);
+		numberCyan.setForeground(Color.CYAN);
+		numberCyan.setOpaque(true);
+		colorGridNumbers.add(numberCyan);
+		
+		JButton numberPink = new JButton(" pink ");
+		numberPink.addActionListener(this);
+		numberPink.setBackground(Color.pink);
+		numberPink.setForeground(Color.pink);
+		numberPink.setOpaque(true);
+		colorGridNumbers.add(numberPink);
+		
+		JButton numberYellow = new JButton(" yellow ");
+		numberYellow.addActionListener(this);
+		numberYellow.setBackground(Color.YELLOW);
+		numberYellow.setForeground(Color.YELLOW);
+		numberYellow.setOpaque(true);
+		colorGridNumbers.add(numberYellow);
+		
+		changeNumberGrid.add(colorGridNumbers, BorderLayout.CENTER);
+		
+		JPanel defaultButtonPanel = new JPanel();
+		defaultButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JButton defaultButton = new JButton("Set Number Color Back to Default");
+		defaultButton.addActionListener(this);
+		defaultButtonPanel.add(defaultButton);
+		colorGridNumbers.add(defaultButtonPanel);
+		
+		changeNumberGrid.add(defaultButtonPanel, BorderLayout.SOUTH);
+		
+		colorNumber = new JMenu("Number Color");
+		colorNumber.add(changeNumberGrid);
+		menuBar.add(colorNumber);
+		
+		setJMenuBar(menuBar);
+		
+		
+		setJMenuBar(menuBar);
+		
+		
+		
+		
+		
+		
+		
+		
 		// creates a new Grid Layout to add the top pane (indicator, grid for game, check buttons)
 		topPanel = new JPanel();
 		topPanel.setLayout(new GridLayout(1, 3));
@@ -128,12 +339,31 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(x, y));
 		
+		if(checkColor)
+			gridPanel.setBackground(setColor);
+		
+		
+		
 		
 		// will fill in or leave blank the text fields in the grid
 		for (int i = 0; i < (9*9); i++){
-			input[i] = new JTextField(1);
-			input[i].setFont(inputFont);
-			input[i].setHorizontalAlignment(JTextField.CENTER);
+			if(checkColor){
+				input[i] = new JTextField(1);
+				input[i].setFont(inputFont);
+				input[i].setHorizontalAlignment(JTextField.CENTER);
+				input[i].setBackground(setColor);
+				if(checkNumColor){
+					input[i].setForeground(getNumColor);
+				}
+			}
+			else{
+				input[i] = new JTextField(1);
+				input[i].setFont(inputFont);
+				input[i].setHorizontalAlignment(JTextField.CENTER);
+				if(checkNumColor){
+					input[i].setForeground(getNumColor);
+				}
+			}
 			int moveConstant = 0;
 			for (int j = 0; j < indexCounter; j++){ // 
 				if(i == indexArray[j]){ // if the index i is equal to a cell that should have a constant value then the cell will show the constant and remain un-editble
@@ -201,8 +431,13 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		gridPanel.setVisible(true);
 		
 		time.start(); // starts time
+	}	
+	private JMenuItem makeMenuItem(String name){
+		JMenuItem m = new JMenuItem(name);
+		m.addActionListener(this);
+		return m;
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		String buttonCheck = e.getActionCommand();
 		Boolean checkWin;
@@ -223,6 +458,109 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		// check the current numbers for correct/incorrect values
 		else if (buttonCheck.equals("Guess")){
 			checkGuessNumbers();
+		}
+		else if(buttonCheck.equals("Open")){
+			System.out.println("Open");
+		}
+		else if(buttonCheck.equals(" RED ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.RED, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" BLUE ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.BLUE, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" GREEN ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.GREEN, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" BLACK ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.BLACK, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" GRAY ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.GRAY, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" ORANGE ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.ORANGE, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" CYAN ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.CYAN, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" PINK ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.pink, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" YELLOW ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, true, Color.YELLOW, checkNumColor, getNumColor);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" red ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.RED);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" blue ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.BLUE);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" green ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor,  true, Color.GREEN);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" black ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.BLACK);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" gray ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.GRAY);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" orange ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.ORANGE);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" cyan ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.CYAN);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" pink ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.pink);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals(" yellow ")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, true, Color.YELLOW);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals("Set Number Color Back to Default")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, checkBackColor, getColor, false, null);
+			g1.setVisible(true);
+		}
+		else if(buttonCheck.equals("Set Background Color Back to Default")){
+			dispose();
+			GridLayoutPage g1 = new GridLayoutPage(9, 9, getLevel, checkDemovar, false, null, checkNumColor, getNumColor);
+			g1.setVisible(true);
 		}
 		else{
 			moveCounter.setText("Total Moves: " + (++counterPress - 35)); 

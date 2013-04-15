@@ -170,6 +170,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener{
 		}
 		// if the button says "Advanced" then the current window will be disposed and a new "AdvancedSettings" window will appear
 		else if(getAction.equals("Advanced")){
+			dispose();
 			AdvancedWindow aw = new AdvancedWindow();
 			aw.setVisible(true);
 		}

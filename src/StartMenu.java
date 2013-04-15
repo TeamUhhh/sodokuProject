@@ -109,12 +109,12 @@ public class StartMenu extends JFrame implements ActionListener{
 		
 		// creates a new "Easy" GridLayout
 		if(getAction.equals("Easy")){
-			GridLayoutPage nineGrid = new GridLayoutPage(9, 9, "Easy", checkDemovar); // checkDemovar to check if "Demo" has been selected
+			GridLayoutPage nineGrid = new GridLayoutPage(9, 9, "Easy", checkDemovar, false, null, false, null); // checkDemovar to check if "Demo" has been selected
 			nineGrid.setVisible(true);
 		}
 		// creates a new "Hard" GridLayout
 		else if(getAction.equals("Hard")){
-			GridLayoutPage settings = new GridLayoutPage(9, 9, "Hard", checkDemovar); // checkDemovar to check if "Demo" has been selected
+			GridLayoutPage settings = new GridLayoutPage(9, 9, "Hard", checkDemovar, false, null, false, null); // checkDemovar to check if "Demo" has been selected
 			settings.setVisible(true);
 		}
 		// creates a new Settings Page

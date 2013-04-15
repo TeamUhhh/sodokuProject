@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -20,7 +21,7 @@ public class HighScores extends JFrame implements ActionListener{
 	public static final int HEIGHTHIGH = 400;
 	
 	Scanner readHighScores = null;
-	JTextArea highScoreScreen;
+	JLabel highScoreScreen;
 	
 	String name = null, time = null, moves = null, level = null;
 	
@@ -53,7 +54,7 @@ public class HighScores extends JFrame implements ActionListener{
 			moves = readHighScores.next();
 			level = readHighScores.next();
 			
-			highScoreScreen = new JTextArea("Name: " + name + "   Your Time: " + time + "   Moves: " + moves + "   Levels: " + level); // creates a TextArea to display results
+			highScoreScreen = new JLabel("Name: " + name + "   Your Time: " + time + "   Moves: " + moves + "   Levels: " + level); // creates a TextArea to display results
 		}
 		catch (FileNotFoundException e){
 			System.out.println("HighScores file not found");
@@ -78,8 +79,6 @@ public class HighScores extends JFrame implements ActionListener{
 		
 		// if the button says "OK" then a new settings page will be created and the current High-Scores Screen will be disposed
 		if(getAction.equals("OK")){
-			SettingsLayoutPage newSettings = new SettingsLayoutPage(false);
-			newSettings.setVisible(true);
 			dispose();
 		}
 	}

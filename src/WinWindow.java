@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.PrintWriter;
 
 import javax.swing.JButton;
@@ -66,9 +68,30 @@ public class WinWindow extends JFrame implements ActionListener{
 		
 		// creates a Text Area to display user info
 		JPanel textPanel = new JPanel();
-		textPanel.setLayout(new BorderLayout());
-		JTextArea textInfo = new JTextArea("Level You Were Playing: " + level + "\nYour Time: " + time + "\nHow many moves it took: " + moves);
-		textPanel.add(textInfo, BorderLayout.CENTER);
+		textPanel.setLayout(new GridLayout(3,1));
+
+
+		JPanel centerInfoLevel = new JPanel();
+		centerInfoLevel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JLabel levelInfo = new JLabel("Level You Were Playing: " + level);
+		centerInfoLevel.add(levelInfo);
+		textPanel.add(centerInfoLevel);
+
+
+		JPanel centerInfoTime = new JPanel();
+		centerInfoTime.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JLabel timeInfo = new JLabel("Your Time: " + time);
+		centerInfoTime.add(timeInfo);
+		textPanel.add(centerInfoTime);
+
+
+		JPanel centerInfoMoves = new JPanel();
+		centerInfoMoves.setLayout(new FlowLayout(FlowLayout.CENTER));
+		JLabel movesInfo = new JLabel("How many moves it took: " + moves);
+		centerInfoMoves.add(movesInfo);
+		textPanel.add(centerInfoMoves);
+
+		
 		infoPanel.add(textPanel);
 		
 		
@@ -78,6 +101,11 @@ public class WinWindow extends JFrame implements ActionListener{
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		inputName = new JTextField("Please enter in your name...");
+		inputName.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent e){
+				inputName.setText("");
+			}
+		});
 		namePanel.add(inputName);
 		
 		// creates a button (on the same Panel above) to "submit" your name
