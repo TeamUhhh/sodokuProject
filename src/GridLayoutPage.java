@@ -564,9 +564,10 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 			g1.setVisible(true);
 		}
 		else{
-			moveCounter.setText("Total Moves: " + (++counterPress - 35)); 
+			moveCounter.setText("Total Moves: " + (++counterPress)); 
 			checkCorrectFormat(e);
-		}	
+			counterPress -= 35;
+		}
 	}
 
 	public void checkCorrectFormat(ActionEvent e) {
@@ -725,6 +726,7 @@ public class GridLayoutPage extends JFrame implements ActionListener{
 		}
 		// if user did win then a new "WinWindow" will pop up
 		else{
+			dispose();
 			WinWindow ww = new WinWindow(timeCount, counterPress, getLevel);
 			ww.setVisible(true);
 		}

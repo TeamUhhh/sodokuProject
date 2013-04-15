@@ -49,8 +49,26 @@ public class HighScores extends JFrame implements ActionListener{
 		// reads in the from the file and inputs them into a corresponding variable 
 		try{
 			readHighScores = new Scanner(new FileInputStream("highscores.txt"));
+			Boolean checkTime = false;
+
 			name = readHighScores.next();
 			time = readHighScores.next();
+
+			for(int i = 0; i < 9; i++){
+			         if(time.contains(Integer.toString(i))){
+			                    checkTime = true;
+			                    break;
+			          }
+			         else{
+			                   checkTime = false;
+			         }
+			}
+
+			if(!checkTime){
+			        name  = name + " " + time;
+			        time = readHighScores.next();
+			}
+
 			moves = readHighScores.next();
 			level = readHighScores.next();
 			
