@@ -27,23 +27,12 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 	public static final int HEIGHTSETTINGS = 500;
 	
 	Boolean demoCheckvar = false; // variable to check if the "Demo" button was press
-
-	public SettingsLayoutPage(Boolean DemoCheck) {
-		
-		super();
-		
-		// used to check if the user pressed the "Demo" button (the boolean value will carry through the program)
-		demoCheckvar = DemoCheck;
-		
 		
 	private Font labelFont = new Font("Arial", Font.BOLD, 14);
-
 	private Boolean dropDownCheck = false, buttonSelectCheck = false, defaultInput = false, hideTime = false, hideTimeNo = true, hideMove = false, 
 			setTime = false, hideGuess = false, hideGive = false;
-
 	private JCheckBox boxButtons = null, dropDownSelect = null, defaultSelect = null, yesTime = null, noTime = null, yesMove = null, noMove = null, 
 			yesSetTime = null, noSetTime = null, yesGuess = null, noGuess = null, yesGive = null, noGive = null;
-
 	TimerClass gameTime = new TimerClass();
 
 	public SettingsLayoutPage(Boolean defaultSelectCheck, Boolean checkDropDown, Boolean checkButtonSelect, Boolean hideTimeSelect, Boolean hideMoveSelect, Boolean guessHide, Boolean giveHide) {
