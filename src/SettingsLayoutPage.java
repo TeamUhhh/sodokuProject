@@ -1,16 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-<<<<<<< HEAD
-=======
 import java.awt.Font;
 >>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-=======
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -27,19 +23,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-<<<<<<< HEAD
-public class SettingsLayoutPage extends JFrame implements ActionListener{
-	
-=======
 public class SettingsLayoutPage extends JFrame implements ActionListener, ItemListener{
 
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 	public static final int WIDTHSETTINGS = 500;
 	public static final int HEIGHTSETTINGS = 500;
 	
 	Boolean demoCheckvar = false; // variable to check if the "Demo" button was press
 
-<<<<<<< HEAD
 	public SettingsLayoutPage(Boolean DemoCheck) {
 		
 		super();
@@ -48,7 +38,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		demoCheckvar = DemoCheck;
 		
 		
-=======
 	private Font labelFont = new Font("Arial", Font.BOLD, 14);
 
 	private Boolean dropDownCheck = false, buttonSelectCheck = false, defaultInput = false, hideTime = false, hideTimeNo = true, hideMove = false, 
@@ -63,25 +52,18 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 
 		super();
 
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		// gets the screen resolution to display the frame in the center of the screen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHSETTINGS/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - HEIGHTSETTINGS/2);
-<<<<<<< HEAD
 		
 		
-=======
-
-
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		// set the properties of the frame
 		setSize(WIDTHSETTINGS, HEIGHTSETTINGS);
 		setTitle("Team Uhhhh");
 		setLocation(sWidth, sHeight);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-<<<<<<< HEAD
 		
 		
 		// creates a top grid panel for spacing 
@@ -92,8 +74,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		// creates a "Top Back Panel" to add everything on top 
 		JPanel topBackPanel = new JPanel();
 		topBackPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
-		
-=======
 
 
 		// gets info from other frames
@@ -117,19 +97,15 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		topBackPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
 
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		// Back button made to move back to the Start Screen (placed on the top left of screen)
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(this);
 		topBackPanel.add(backButton);
-<<<<<<< HEAD
 		
 		
 		// creates a "Top Back Panel" to add everything on top 
 		JPanel topBackPanel1 = new JPanel();
 		topBackPanel1.setLayout(new FlowLayout(FlowLayout.TRAILING));
-		
-=======
 
 
 		// creates a "Top Back Panel" to add everything on top 
@@ -137,12 +113,10 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		topBackPanel1.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
 
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		// Advanced button made to move back to the Start Screen (placed on the right left of screen)
 		JButton advanceButton = new JButton("Advanced");
 		advanceButton.addActionListener(this);
 		topBackPanel1.add(advanceButton);
-<<<<<<< HEAD
 		
 		
 		// adds both panels to the base grid panel
@@ -214,8 +188,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		
 		lowerGrid.add(panelOnGrid3); // adds the buttons to the third row of the base "grid" layout
 		
-		
-=======
 
 
 		// adds both panels to the base grid panel
@@ -446,13 +418,10 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 
 		lowerGrid.add(panelOnGrid4); // adds the buttons to the third row of the base "grid" layout
 
-
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		// adds everything to the frame
 		add(lowerGrid, BorderLayout.CENTER);
 	}
 	public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
 		
 		String getAction = e.getActionCommand(); // used to get the command of the button
 		
@@ -465,7 +434,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		}
 		// if the button says "High Scores" then a new window will pop up and display any high scores
 		else if(getAction.equals("HighScores")){
-=======
 
 		String getAction = e.getActionCommand(); // used to get the command of the button
 
@@ -482,7 +450,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		}
 		// if the button says "High Scores" then a new window will pop up and display any high scores
 		else if(getAction.equals("     HighScores     ")){
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 			Scanner checkSettingsExist = null;
 			try{
 				// used to check if the highscores file exists, if not then an error will be caught and a new window will say that no file exist
@@ -492,26 +459,20 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 				highScorePage.setVisible(true);
 			}
 			catch(FileNotFoundException ex){
-<<<<<<< HEAD
 				ErrorWindow noScores = new ErrorWindow("No Scores");
-=======
 				ErrorWindow noScores = new ErrorWindow("No Scores", null, 0);
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 				noScores.setVisible(true);
 			}
 		}
 		// if the button says "Advanced" then the current window will be disposed and a new "AdvancedSettings" window will appear
 		else if(getAction.equals("Advanced")){
-<<<<<<< HEAD
 			AdvancedWindow aw = new AdvancedWindow();
 			aw.setVisible(true);
 		}
 		else if(getAction.equals("NEW BUTTON")){
-=======
 			dispose();
 			AdvancedWindow aw = new AdvancedWindow();
 			aw.setVisible(true);
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		}
 		else
 			System.out.println("Error No Label Found");
