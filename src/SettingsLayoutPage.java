@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -10,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
