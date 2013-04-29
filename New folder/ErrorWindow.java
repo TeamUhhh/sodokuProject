@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,13 +16,7 @@ import javax.swing.JPanel;
 
 
 public class ErrorWindow extends JFrame implements ActionListener{
-<<<<<<< HEAD
 	ErrorWindow(String errorMessage){
-=======
-	TimerClass gameTime = null;
-	
-	ErrorWindow(String errorMessage, TimerClass time, int number){
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		
 		super();
 		
@@ -37,11 +33,6 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		setLocation(sWidth, sHeight);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-<<<<<<< HEAD
-=======
-		// info from other screens
-		gameTime = time;
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		
 		// creates a new Border Layout to display certain Error Messages (displays a label with the corresponding error message)
 		if(errorMessage.equals("Not Number")){
@@ -54,14 +45,6 @@ public class ErrorWindow extends JFrame implements ActionListener{
 			JLabel errorStatement = new JLabel("Sorry, not a Winning Combination", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
-<<<<<<< HEAD
-=======
-		else if(errorMessage.equals("You Lose")){
-			setLayout(new BorderLayout());
-			JLabel errorStatement = new JLabel("Sorry, you have used all your remaining guess. Try again", JLabel.CENTER);
-			add(errorStatement, BorderLayout.CENTER);
-		}
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		else if(errorMessage.equals("Bad Number")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("Enter numbers less than 9 and greater than 0 only!", JLabel.CENTER);
@@ -72,21 +55,6 @@ public class ErrorWindow extends JFrame implements ActionListener{
 			JLabel errorStatement = new JLabel("Please Check 'Settings -> HighScrore' To Check Your Scores!", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
-<<<<<<< HEAD
-		
-		
-		// creates an "OK" button to be pressed and dismiss window
-		JPanel submitButton = new JPanel(new FlowLayout());
-		JButton closeWindow = new JButton("OK");
-		closeWindow.addActionListener(this);
-		submitButton.add(closeWindow);
-		add(submitButton, BorderLayout.SOUTH);
-	}
-
-	public void actionPerformed(ActionEvent e){
-		dispose(); // gets rid of the current window
-	}
-=======
 		else if(errorMessage.equals("No Scores")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("You have no High Scores, Play a game and come back later", JLabel.CENTER);
@@ -99,70 +67,41 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		}
 		else if(errorMessage.equals("Delete")){
 			setLayout(new BorderLayout());
-			JLabel errorStatement = new JLabel("THIS CAN NOT BE UNDONE", JLabel.CENTER);
-			add(errorStatement, BorderLayout.CENTER);
-		}
-		else if(errorMessage.equals("No Solve")){
-			setLayout(new BorderLayout());
-			JLabel errorStatement = new JLabel("The file you choose (samplesudoku" + number + ".txt) can not be solved, Please delete that file.", JLabel.CENTER);
+			JLabel errorStatement = new JLabel("This Can NOT be un-done", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
 		
-		if(errorMessage.equals("No Solve")){
-			JPanel submitButton = new JPanel(new FlowLayout());
-			JButton closeWindow = new JButton("EXIT NOW");
-			closeWindow.addActionListener(this);
-			submitButton.add(closeWindow);
-			add(submitButton, BorderLayout.SOUTH);
-		}
-		else if(!(errorMessage.equals("Delete"))){
-			// creates an "OK" button to be pressed and dismiss window
+		if(!(errorMessage.equals("Delete"))){
+		// creates an "OK" button to be pressed and dismiss window
 			JPanel submitButton = new JPanel(new FlowLayout());
 			JButton closeWindow = new JButton("OK");
 			closeWindow.addActionListener(this);
 			submitButton.add(closeWindow);
 			add(submitButton, BorderLayout.SOUTH);
-		} 
+		}
 		else{
 			JPanel submitButton = new JPanel(new FlowLayout());
-			JButton closeWindow = new JButton("I Understand");
+			JButton closeWindow = new JButton("I UnderStand");
 			closeWindow.addActionListener(this);
 			submitButton.add(closeWindow);
-
-			JButton cancel = new JButton("Cancel");
-			cancel.addActionListener(this);
-			submitButton.add(cancel);
-
 			add(submitButton, BorderLayout.SOUTH);
-
-
 		}
 	}
 
 	public void actionPerformed(ActionEvent e){
+		String getCommand = e.getActionCommand();
 		
-		String getMessage = e.getActionCommand();
-		
-		if(getMessage.equals("I Understand")){
+		if(getCommand.equals("I UnderStand")){
+			System.out.println("hello");
+			File deleteFile = null;
 			try{
-				File filed = new File("highscores.txt");
-				filed.delete();
-				dispose();
-			}catch(Exception er){
-				System.out.println("Can not open HighScore file");
+				deleteFile = new File("highscores.txt");
+				deleteFile.delete();
+			}
+			catch(Exception er){
+				System.out.println("Error");
 			}
 		}
-		else if(getMessage.equals("Exit Now")){
-			Runtime.getRuntime().halt(0);
-		}
-		else if(getMessage.equals("Cancel")){
-			dispose();
-		}
-		else{
-			//gameTime.startTimer(false);
-			dispose(); // gets rid of the current window
-		}
-		//need gameTimer here if not win
+		dispose(); // gets rid of the current window
 	}
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 }
