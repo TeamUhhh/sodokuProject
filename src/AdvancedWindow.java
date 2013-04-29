@@ -87,7 +87,6 @@ public class AdvancedWindow extends JFrame implements ActionListener{
 		// if "Back" button pressed the the current window will be disposed and a new Settings Frame will be created with the value of demoOn passed through
 		else if(getAction.equals("Back")){
 			dispose();
-			SettingsLayoutPage demoOnSettings = new SettingsLayoutPage(demoOn);
 			SettingsLayoutPage demoOnSettings = new SettingsLayoutPage(false, false, false, false, false, false, false);
 			demoOnSettings.setVisible(true);
 		}
