@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -26,19 +25,19 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 	public static final int WIDTHSETTINGS = 500;
 	public static final int HEIGHTSETTINGS = 500;
 
-	private Font labelFont = new Font("Arial", Font.BOLD, 14);
+	Boolean dropDownCheck = false;
+	Boolean buttonSelectCheck = false;
+	Boolean defaultInput = false;
 
-	private Boolean dropDownCheck = false, buttonSelectCheck = false, defaultInput = false, hideTime = false, hideTimeNo = true, hideMove = false, 
-			setTime = false, hideGuess = false, hideGive = false;
+	JCheckBox boxButtons = null, dropDownSelect = null, defaultSelect = null;
 
-	private JCheckBox boxButtons = null, dropDownSelect = null, defaultSelect = null, yesTime = null, noTime = null, yesMove = null, noMove = null, 
-			yesSetTime = null, noSetTime = null, yesGuess = null, noGuess = null, yesGive = null, noGive = null;
-
-	TimerClass gameTime = new TimerClass();
-
-	public SettingsLayoutPage(Boolean defaultSelectCheck, Boolean checkDropDown, Boolean checkButtonSelect, Boolean hideTimeSelect, Boolean hideMoveSelect, Boolean guessHide, Boolean giveHide) {
+	public SettingsLayoutPage(Boolean defaultSelectCheck, Boolean checkDropDown, Boolean checkButtonSelect) {
 
 		super();
+
+		dropDownCheck = checkDropDown;
+		buttonSelectCheck = checkButtonSelect;
+		defaultInput = defaultSelectCheck;
 
 		// gets the screen resolution to display the frame in the center of the screen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -54,17 +53,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		setLayout(new BorderLayout());
 
 
-		// gets info from other frames
-		hideGuess = guessHide;
-		hideGive = giveHide;
-		dropDownCheck = checkDropDown;
-		buttonSelectCheck = checkButtonSelect;
-		defaultInput = defaultSelectCheck;
-		hideTime = hideTimeSelect;
-		hideTimeNo = !hideTimeSelect;
-		hideMove = hideMoveSelect;
-
-
 		// creates a top grid panel for spacing 
 		JPanel topGrid = new JPanel();
 		topGrid.setLayout(new GridLayout(1, 2));
@@ -74,7 +62,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		JPanel topBackPanel = new JPanel();
 		topBackPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-
+		
 		// Back button made to move back to the Start Screen (placed on the top left of screen)
 		JButton backButton = new JButton("Back");
 		backButton.addActionListener(this);
@@ -85,7 +73,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		JPanel topBackPanel1 = new JPanel();
 		topBackPanel1.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
-
+		
 		// Advanced button made to move back to the Start Screen (placed on the right left of screen)
 		JButton advanceButton = new JButton("Advanced");
 		advanceButton.addActionListener(this);
@@ -108,8 +96,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		JPanel highScoreLabel = new JPanel();
 		highScoreLabel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-		JLabel highScoreText = new JLabel("HIGHSCORE _______________________________________________");
-		highScoreText.setFont(labelFont);
+		JLabel highScoreText = new JLabel("HIGHSCORE _________________________________________________");
 		highScoreLabel.add(highScoreText);
 		lowerGrid.add(highScoreLabel);
 
@@ -134,8 +121,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		JPanel inputLabel = new JPanel();
 		inputLabel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-		JLabel inputText = new JLabel("INPUT ____________________________________________________");
-		inputText.setFont(labelFont);
+		JLabel inputText = new JLabel("INPUT ______________________________________________________");
 		inputLabel.add(inputText);
 		lowerGrid.add(inputLabel);
 
@@ -144,7 +130,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		panelOnGrid2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
 		ButtonGroup group = new ButtonGroup();	
-
+		
 		// Button to be replaced later
 		defaultSelect = new JCheckBox("Default Type        ");
 		defaultSelect.addItemListener(this);
@@ -162,7 +148,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		dropDownSelect = new JCheckBox("Drop Down        ");
 		dropDownSelect.addItemListener(this);
 		dropDownSelect.setMnemonic(KeyEvent.VK_C);
-
 		if(!dropDownCheck){
 			dropDownSelect.setSelected(false);
 		}
@@ -172,6 +157,19 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		panelOnGrid2.add(dropDownSelect);
 		group.add(dropDownSelect);
 
+		// Button to be replaced later
+		boxButtons = new JCheckBox("Box Buttons");
+		boxButtons.addItemListener(this);
+		boxButtons.setMnemonic(KeyEvent.VK_C);
+		if(!buttonSelectCheck){
+			boxButtons.setSelected(false);
+		}
+		else if(buttonSelectCheck){
+			boxButtons.setSelected(true);
+		}
+		panelOnGrid2.add(boxButtons);
+		group.add(boxButtons);
+		
 		lowerGrid.add(panelOnGrid2); // adds the buttons to the second row of the base "grid" layout
 
 
@@ -180,143 +178,48 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		JPanel otherLabel = new JPanel();
 		otherLabel.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-		JLabel otherText = new JLabel("HIDE LABELS ______________________________________________");
-		otherText.setFont(labelFont);
+		JLabel otherText = new JLabel("OTHER ______________________________________________________");
 		otherLabel.add(otherText);
 		lowerGrid.add(otherLabel);
 
 		JPanel panelOnGrid3 = new JPanel();
 		panelOnGrid3.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-		ButtonGroup group1 = new ButtonGroup();
+
 		// Button to be replaced later
-		JPanel hideTimePanel = new JPanel(new GridLayout(2, 1));
-		JPanel timeFlow = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel hideTimeLabel = new JLabel("Hide Time:");
-		timeFlow.add(hideTimeLabel);
+		JButton NEWBUTTON3 = new JButton("NEW BUTTON");
+		NEWBUTTON3.addActionListener(this);
+		panelOnGrid3.add(NEWBUTTON3);
 
-		yesTime = new JCheckBox("Yes");
-		yesTime.addItemListener(this);
-		yesTime.setMnemonic(KeyEvent.VK_C);
-		if(!hideTime){
-			yesTime.setSelected(false);
-		}
-		else if(hideTime){
-			yesTime.setSelected(true);
-		}
-		timeFlow.add(yesTime);
-		group1.add(yesTime);
 
-		noTime = new JCheckBox("No");
-		noTime.addItemListener(this);
-		noTime.setMnemonic(KeyEvent.VK_C);
-		if(hideTimeNo){
-			noTime.setSelected(true);
-		}
-		else if(!hideTimeNo){
-			noTime.setSelected(false);
-		}
-		timeFlow.add(noTime);
-		group1.add(noTime);
-
-		hideTimePanel.add(timeFlow);
-		panelOnGrid3.add(hideTimePanel);
-
-		JPanel hideMovePanel = new JPanel(new GridLayout(2, 1));
-		JPanel moveFlow = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel hideMoveLabel = new JLabel("   Hide Move:");
-		moveFlow.add(hideMoveLabel);
-
-		ButtonGroup group2 = new ButtonGroup();
-
-		yesMove = new JCheckBox("Yes");
-		yesMove.addItemListener(this);
-		yesMove.setMnemonic(KeyEvent.VK_C);
-		if(hideMove){
-			yesMove.setSelected(true);
-		}
-		moveFlow.add(yesMove);
-		group2.add(yesMove);
-
-		noMove = new JCheckBox("No");
-		noMove.addItemListener(this);
-		noMove.setMnemonic(KeyEvent.VK_C);
-		if(!hideMove){
-			noMove.setSelected(true);
-		}
-		moveFlow.add(noMove);
-		group2.add(noMove);
-		hideMovePanel.add(moveFlow);
-		panelOnGrid3.add(hideMovePanel);
-
+		// Button to be replaced later
+		JButton NEWBUTTON4 = new JButton("NEW BUTTON");
+		NEWBUTTON4.addActionListener(this);
+		panelOnGrid3.add(NEWBUTTON4);
 
 		lowerGrid.add(panelOnGrid3); // adds the buttons to the third row of the base "grid" layout
 
-		JPanel hideGuessLabelPan = new JPanel();
-		hideGuessLabelPan.setLayout(new FlowLayout(FlowLayout.LEADING));
+		JPanel other1Label = new JPanel();
+		other1Label.setLayout(new FlowLayout(FlowLayout.LEADING));
 
-		JLabel hideText = new JLabel("HIDE BUTTONS _____________________________________________");
-		hideText.setFont(labelFont);
-		hideGuessLabelPan.add(hideText);
-		lowerGrid.add(hideGuessLabelPan);
+		JLabel other1Text = new JLabel("OTHER ______________________________________________________");
+		other1Label.add(other1Text);
+		lowerGrid.add(other1Label);
 
 		JPanel panelOnGrid4 = new JPanel();
 		panelOnGrid4.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-		ButtonGroup group3 = new ButtonGroup();
+
 		// Button to be replaced later
-		JPanel hideGuessPanel = new JPanel(new GridLayout(2, 1));
-		JPanel guessFlow = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel hideGuessLabel = new JLabel("Hide Guess Button:");
-		guessFlow.add(hideGuessLabel);
+		JButton NEWBUTTON5 = new JButton("NEW BUTTON");
+		NEWBUTTON5.addActionListener(this);
+		panelOnGrid4.add(NEWBUTTON5);
 
-		yesGuess = new JCheckBox("Yes");
-		yesGuess.addItemListener(this);
-		yesGuess.setMnemonic(KeyEvent.VK_C);
-		if(hideGuess){
-			yesGuess.setSelected(true);
-		}
-		guessFlow.add(yesGuess);
-		group3.add(yesGuess);
 
-		noGuess = new JCheckBox("No");
-		noGuess.addItemListener(this);
-		noGuess.setMnemonic(KeyEvent.VK_C);
-		if(!hideGuess){
-			noGuess.setSelected(true);
-		}
-		guessFlow.add(noGuess);
-		group3.add(noGuess);
-
-		hideGuessPanel.add(guessFlow);
-		panelOnGrid4.add(hideGuessPanel);
-
-		JPanel hideGivePanel = new JPanel(new GridLayout(2, 1));
-		JPanel giveFlow = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JLabel hideGiveLabel = new JLabel("   Hide Give Up Button:");
-		giveFlow.add(hideGiveLabel);
-
-		ButtonGroup group4 = new ButtonGroup();
-
-		yesGive = new JCheckBox("Yes");
-		yesGive.addItemListener(this);
-		yesGive.setMnemonic(KeyEvent.VK_C);
-		if(hideGive){
-			yesGive.setSelected(true);
-		}
-		giveFlow.add(yesGive);
-		group4.add(yesGive);
-
-		noGive = new JCheckBox("No");
-		noGive.addItemListener(this);
-		noGive.setMnemonic(KeyEvent.VK_C);
-		if(!hideGive){
-			noGive.setSelected(true);
-		}
-		giveFlow.add(noGive);
-		group4.add(noGive);
-		hideGivePanel.add(giveFlow);
-		panelOnGrid4.add(hideGivePanel);
+		// Button to be replaced later
+		JButton NEWBUTTON6 = new JButton("NEW BUTTON");
+		NEWBUTTON6.addActionListener(this);
+		panelOnGrid4.add(NEWBUTTON6);
 
 		lowerGrid.add(panelOnGrid4); // adds the buttons to the third row of the base "grid" layout
 
@@ -332,11 +235,11 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 		// if the button says "Back" then the current window will be disposed and a new Start Screen will be created
 		if(getAction.equals("Back")){
 			dispose();
-			StartMenu newStart = new StartMenu(defaultInput, dropDownCheck, buttonSelectCheck, hideTime, hideMove, hideGuess, hideGive, gameTime);
+			StartMenu newStart = new StartMenu(defaultInput, dropDownCheck, buttonSelectCheck);
 			newStart.setVisible(true);
 		}
 		else if(getAction.equals("Delete HighScores")){
-			ErrorWindow ew = new ErrorWindow("Delete", null, 0);
+			ErrorWindow ew = new ErrorWindow("Delete");
 			ew.setVisible(true);
 		}
 		// if the button says "High Scores" then a new window will pop up and display any high scores
@@ -350,7 +253,7 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 				highScorePage.setVisible(true);
 			}
 			catch(FileNotFoundException ex){
-				ErrorWindow noScores = new ErrorWindow("No Scores", null, 0);
+				ErrorWindow noScores = new ErrorWindow("No Scores");
 				noScores.setVisible(true);
 			}
 		}
@@ -360,8 +263,10 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 			AdvancedWindow aw = new AdvancedWindow();
 			aw.setVisible(true);
 		}
+		else if(getAction.equals("NEW BUTTON")){
+		}
 		else
-			System.out.println("Error No Label Found");
+			System.out.println("Error");
 	}
 	public void itemStateChanged(ItemEvent e) {
 
@@ -383,40 +288,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 				dropDownCheck = false;
 				buttonSelectCheck = false;
 			}
-			else if (source == yesTime){
-				hideTime = true;
-				//noTime.setSelected(false);
-				hideTimeNo = false;
-			}
-			else if (source == noTime){
-				hideTime = false;
-				//yesTime.setSelected(false);
-				hideTimeNo = true;
-			}
-			else if (source == yesMove){
-				hideMove = true;
-			}
-			else if (source == noMove){
-				hideMove = false;
-			}
-			else if (source == yesSetTime){
-				setTime = true;
-			}
-			else if (source == noSetTime){
-				setTime = false;
-			}
-			else if (source == noGuess){
-				hideGuess = false;
-			}
-			else if (source == yesGuess){
-				hideGuess = true;
-			}
-			else if (source == noGive){
-				hideGive = false;
-			}
-			else if (source == yesGive){
-				hideGive = true;
-			}
 		}
 		else if (e.getStateChange() == ItemEvent.DESELECTED){
 			if(source == dropDownSelect){
@@ -424,38 +295,6 @@ public class SettingsLayoutPage extends JFrame implements ActionListener, ItemLi
 			}
 			else if(source == boxButtons){
 				buttonSelectCheck = false;
-			}
-			else if(source == yesTime){
-				hideTime = false;
-			}
-			else if(source == noTime){
-				hideTimeNo = false;
-			}
-			else if(source == noMove){
-				hideMove = true;
-				//yesMove.setSelected(true);
-			}
-			else if(source == yesMove){
-				//noMove.setSelected(true);
-				hideMove = false;
-			}
-			else if (source == yesSetTime){
-				setTime = false;
-			}
-			else if (source == noSetTime){
-				setTime = true;
-			}
-			else if (source == noGuess){
-				hideGuess = true;
-			}
-			else if (source == yesGuess){
-				hideGuess = false;
-			}
-			else if (source == noGive){
-				hideGive = true;
-			}
-			else if (source == yesGive){
-				hideGive = false;
 			}
 		}
 

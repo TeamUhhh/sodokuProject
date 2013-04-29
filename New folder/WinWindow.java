@@ -12,66 +12,64 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
 public class WinWindow extends JFrame implements ActionListener{
-
+	
 	public static final int WIDTHWIN = 400;
 	public static final int HEIGHTWIN = 400;
-
-	private JTextField inputName = null;
-	private int timeVar = 0, movesVar = 0;
-	private String levelVar = null;
-
-	private Font headerFont = new Font("Arial", Font.BOLD, 50);
+	
+	JTextField inputName = null;
+	int timeVar = 0, movesVar = 0;
+	String levelVar = null;
+	
+	Font headerFont = new Font("Arial", Font.BOLD, 50);
 
 	WinWindow(int time, int moves, String level){
-
+		
 		super();
-
+		
+		
+		// imports the user info to be used later
+		timeVar = time;
+		movesVar = moves;
+		levelVar = level;
+		
+		
 		// gets the dimensions to set frame in center of screen
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int sWidth = (((int)screenSize.getWidth()/2) - WIDTHWIN/2);
 		int sHeight = (((int)screenSize.getHeight()/2) - HEIGHTWIN/2);
-
-
+		
+		
 		// creates the frame with certain properties
 		setSize(WIDTHWIN, HEIGHTWIN);
 		setTitle("Team Uhhhh");
 		setLocation(sWidth, sHeight);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setLayout(new BorderLayout()); // creates a "bottom" Border Layout
-
-		// get info from other frames
-		timeVar = time;
-		movesVar = moves;
-		levelVar = level;
-
-		if(levelVar.equals("easy")){
-			levelVar = "Easy";
-		}
-		else
-			levelVar = "Hard";
-
-
+		
+		
 		// uses a Panel in order to make a new layout(Grid) in a "layer" of the Border Layout
 		JPanel infoPanel = new JPanel(); 
 		infoPanel.setLayout(new GridLayout(3, 1));
-
-
+		
+		
 		// create a label to display at the top of the frame
 		JLabel header = new JLabel("YOU WON", JLabel.CENTER);
 		header.setFont(headerFont);
 		infoPanel.add(header);
-
-
+		
+		
 		// creates a Text Area to display user info
 		JPanel textPanel = new JPanel();
 		textPanel.setLayout(new GridLayout(3,1));
@@ -79,7 +77,7 @@ public class WinWindow extends JFrame implements ActionListener{
 
 		JPanel centerInfoLevel = new JPanel();
 		centerInfoLevel.setLayout(new FlowLayout(FlowLayout.CENTER));
-		JLabel levelInfo = new JLabel("Level You Were Playing: " + levelVar);
+		JLabel levelInfo = new JLabel("Level You Were Playing: " + level);
 		centerInfoLevel.add(levelInfo);
 		textPanel.add(centerInfoLevel);
 
@@ -97,17 +95,17 @@ public class WinWindow extends JFrame implements ActionListener{
 		centerInfoMoves.add(movesInfo);
 		textPanel.add(centerInfoMoves);
 
-
+		
 		infoPanel.add(textPanel);
-
-
+		
+		
 		// creates a new Panel to Enter name
 		JPanel namePanelBorder = new JPanel();
 		namePanelBorder.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JPanel namePanel = new JPanel();
 		namePanel.setLayout(new FlowLayout(FlowLayout.LEADING));
 		inputName = new JTextField("Please enter in your name...");
-
+		
 		inputName.addKeyListener(new KeyAdapter(){
 			public int x = 0;
 			public void keyPressed(KeyEvent e){
@@ -117,22 +115,22 @@ public class WinWindow extends JFrame implements ActionListener{
 				}
 			}
 		});
-
+		
 		inputName.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent e){
-				inputName.setText("");
-			}
+            public void mouseClicked(MouseEvent e){
+                inputName.setText("");
+            }
 		});
 		namePanel.add(inputName);
-
+		
 		// creates a button (on the same Panel above) to "submit" your name
 		JButton okayName = new JButton("OK");
 		okayName.addActionListener(this);
 		namePanel.add(okayName);
 		namePanelBorder.add(namePanel);
 		infoPanel.add(namePanelBorder);
-
-
+		
+		
 		// creates a new button used to exit to the Start Screen
 		JPanel exitButtonPanel = new JPanel();
 		exitButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -140,29 +138,29 @@ public class WinWindow extends JFrame implements ActionListener{
 		exitStart.addActionListener(this);
 		exitButtonPanel.add(exitStart);
 		add(exitButtonPanel, BorderLayout.SOUTH);
-
-
+		
+		
 		// add the "base" grid panel to the frame
 		add(infoPanel, BorderLayout.CENTER);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		
 		String getInput = e.getActionCommand(); // used to obtain what the button when pressed
 		String getName = null; 
-
+		
 		// if the button said "OK" then a new screen will pop up and the user info will be put to a file
 		if(getInput.equals("OK")){
 			getName = inputName.getText();
 			HighScoreFile(getName, timeVar, movesVar, levelVar);
 			dispose();
-			ErrorWindow ew = new ErrorWindow("Win Screen", null, 0);
+			ErrorWindow ew = new ErrorWindow("Win Screen");
 			ew.setVisible(true);
-
+			
 		}
 		// if the button said "Exit to Home" then all screens will dispose and a new Start Screen will show
 		else if(getInput.equals("Exit to Home")){
-			ErrorWindow notSavePrompt = new ErrorWindow("Your score was not saved.", null, 0);
+			ErrorWindow notSavePrompt = new ErrorWindow("Your score was not saved.");
 			notSavePrompt.setVisible(true);
 			//StartMenu newStart = new StartMenu(false);
 			//newStart.setVisible(true);
@@ -174,7 +172,7 @@ public class WinWindow extends JFrame implements ActionListener{
 		try{
 			// opens up a file called "highscores" and outputs the info to the file
 			highScoreFile = new BufferedWriter(new FileWriter("highscores.txt", true));
-			highScoreFile.write(name + " " + time + " " + moves + " " + levelVar + "\n");
+			highScoreFile.write(name + " " + time + " " + moves + " " + level + "\n");
 			highScoreFile.flush();
 			highScoreFile.close();
 		}
