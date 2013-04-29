@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,13 +13,10 @@ import javax.swing.JPanel;
 
 
 public class ErrorWindow extends JFrame implements ActionListener{
-<<<<<<< HEAD
-	ErrorWindow(String errorMessage){
-=======
+
 	TimerClass gameTime = null;
 	
 	ErrorWindow(String errorMessage, TimerClass time, int number){
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		
 		super();
 		
@@ -37,11 +33,8 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		setLocation(sWidth, sHeight);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-<<<<<<< HEAD
-=======
 		// info from other screens
 		gameTime = time;
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		
 		// creates a new Border Layout to display certain Error Messages (displays a label with the corresponding error message)
 		if(errorMessage.equals("Not Number")){
@@ -54,14 +47,11 @@ public class ErrorWindow extends JFrame implements ActionListener{
 			JLabel errorStatement = new JLabel("Sorry, not a Winning Combination", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
-<<<<<<< HEAD
-=======
 		else if(errorMessage.equals("You Lose")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("Sorry, you have used all your remaining guess. Try again", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 		else if(errorMessage.equals("Bad Number")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("Enter numbers less than 9 and greater than 0 only!", JLabel.CENTER);
@@ -72,7 +62,6 @@ public class ErrorWindow extends JFrame implements ActionListener{
 			JLabel errorStatement = new JLabel("Please Check 'Settings -> HighScrore' To Check Your Scores!", JLabel.CENTER);
 			add(errorStatement, BorderLayout.CENTER);
 		}
-<<<<<<< HEAD
 		
 		
 		// creates an "OK" button to be pressed and dismiss window
@@ -86,7 +75,6 @@ public class ErrorWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		dispose(); // gets rid of the current window
 	}
-=======
 		else if(errorMessage.equals("No Scores")){
 			setLayout(new BorderLayout());
 			JLabel errorStatement = new JLabel("You have no High Scores, Play a game and come back later", JLabel.CENTER);
@@ -164,5 +152,4 @@ public class ErrorWindow extends JFrame implements ActionListener{
 		}
 		//need gameTimer here if not win
 	}
->>>>>>> 246594c5645d8e24990eaa0ac913df68c054c328
 }
